@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Calculator by RB</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+
+    .calculator {
+      position: relative;
+      width: 320px;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .owner {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #ffd194, #ffb347);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 8px rgba(255, 177, 71, 0.4);
+      pointer-events: none;
+    }
+
+    .display {
+      width: 100%;
+      height: 70px;
+      margin-bottom: 15px;
+      border-radius: 15px;
+      border: none;
+      padding: 15px;
+      font-size: 1.8rem;
+      text-align: right;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      outline: none;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      height: 60px;
+      border-radius: 15px;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .operator {
+      background: linear-gradient(135deg, #ff8c00, #ff6a00);
+    }
+
+    .equal {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+    }
+
+    .clear {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="owner">RB</div>
+    <input type="text" id="display" class="display" readonly />
+
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button class="operator" onclick="append('%')">%</button>
+      <button class="operator" onclick="append('/')">÷</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('*')">×</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="operator" onclick="append('+')">+</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function append(value) {
+      display.value += value;
+      realTimeCalculate();
+    }
+
+    function clearDisplay() {
+      display.value = "";
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+      realTimeCalculate();
+    }
+
+    function calculate() {
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = "Error";
+      }
+    }
+
+    function realTimeCalculate() {
+      try {
+        const result = eval(display.value);
+        if (!isNaN(result)) {
+          display.value = display.value;
+        }
+      } catch {}
+    }
+  </script>
+</body>
+</html>
